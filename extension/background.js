@@ -90,6 +90,9 @@ function initialRegistry () {
 
 // handle all messages
 
+let timerID;
+let timerTime;
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) =>{
   /* request
     {
@@ -103,10 +106,30 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) =>{
   switch(request.command) {
     case "addTask":
       handleAddTask(request.payload)
+      sendResponse(null)
       break;
     case "deleteTask":
-      console.log(request)
       handleDeleteTask(request.payload)
+      sendResponse(null)
+      break;
+    case 'start-timer':
+      timerTime = new Date(request.when)
+      timerID = setTimeout(() => {
+        console.log("done!")
+        chrome.storage.sync.set({ isTimerOn: false });
+        chrome.tabs.create({
+          url: 'time-is-up.html'
+        });
+      }, timerTime.getTime() - Date.now());
+      break;
+    case 'stop-timer':
+      console.log("stopped timer")
+      clearInterval(timerID);
+      break;
+    case 'get-time':
+      console.log("got time")
+      console.log(timerTime)
+      sendResponse({time: timerTime.getTime()})
       break;
   }
 })
@@ -151,31 +174,3 @@ function handleDeleteTask(uuid){
 
   taskList = newTaskList;
 }
-
-//Messaging system for timer
-let timerID;
-let timerTime;
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  console.log("receive message")
-  switch(request.cmd) {
-    case 'start-timer':
-      timerTime = new Date(request.when)
-      timerID = setTimeout(() => {
-        console.log("done!")
-        chrome.storage.sync.set({ isTimerOn: false });
-        chrome.tabs.create({
-          url: 'time-is-up.html'
-        });
-      }, timerTime.getTime() - Date.now());
-      break;
-    case 'stop-timer':
-      console.log("stopped timer")
-      clearInterval(timerID);
-      break;
-    case 'get-time':
-      console.log("got time")
-      console.log(timerTime)
-      sendResponse({time: timerTime.getTime()})
-      break;
-  }
-})
