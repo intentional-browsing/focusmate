@@ -106,9 +106,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) =>{
   switch(request.command) {
     case "addTask":
       handleAddTask(request.payload)
+      sendResponse(null)
       break;
     case "deleteTask":
       handleDeleteTask(request.payload)
+      sendResponse(null)
       break;
     case 'start-timer':
       timerTime = new Date(request.when)
