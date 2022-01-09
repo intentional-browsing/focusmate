@@ -105,7 +105,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) =>{
       handleAddTask(request.payload)
       break;
     case "deleteTask":
-      console.log(request)
       handleDeleteTask(request.payload)
       break;
   }
@@ -155,6 +154,7 @@ function handleDeleteTask(uuid){
 //Messaging system for timer
 let timerID;
 let timerTime;
+/*
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log("receive message")
   switch(request.cmd) {
@@ -179,3 +179,4 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       break;
   }
 })
+*/
