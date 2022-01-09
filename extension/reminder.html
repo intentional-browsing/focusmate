@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <title>Reminder</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="libraries/bootstrap.min.css">
+  <link rel="stylesheet" href="reminder.css" type="text/css" />
+    <script src="libraries/jquery-3.6.0.min.js"></script>
+    <style>
+      body {
+        background-color: #DDDDDF;
+      }
+      #reminder-header {
+        background-color: #4C86A8;
+        color: white;
+        text-align: center;
+        padding: 1em;
+        margin-top: 1%;
+        border-radius: 5px;
+      }
+      #reminder-content {
+        background-color: rgb(243, 243, 243);
+        border-radius: 10px;
+        margin-top: 2em;
+        margin-bottom: 2em;
+        padding: 5em;
+        text-align: center;
+        font-size: 50%;
+      }
+      #warning {
+        background-color: D00000;
+      }
+      #warning-text {
+        margin-left: 20px;
+        color: #3b0000;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="main-container">
+      <!-- Heading -->
+      <div class="container" id="reminder-header">
+        <h1 id="top-header" class="bordered-content ">REMINDER</h1>
+      </div>
+
+      <!-- Description -->
+      <div id="reminder-content" class="bordered-content short-width common-font">
+        <p id = "reminder-text" class = "lead text-large "> reminder goes here </p>
+      </div>
+
+
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+          <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+          </symbol>
+        </svg>
+        <div class="alert alert-danger d-flex align-items-center"" role="alert" id="warning">
+          <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+          <div id="warning-text">
+            RETURN TO YOUR WORK!
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+  <script src="reminder.js"></script>
+</html>

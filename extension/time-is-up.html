@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title>Time is Up!</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="libraries/bootstrap.min.css">
+  <link rel="stylesheet" href="reminder.css" type="text/css" />
+    <script src="libraries/jquery-3.6.0.min.js"></script>
+    <style>
+      body {
+        background-color: #DDDDDF;
+      }
+      #timer-header {
+        background-color: #4C86A8;
+        color: white;
+        text-align: center;
+        padding: 1em;
+        margin-top: 1%;
+        border-radius: 5px;
+      }
+      #timer-content {
+        background-color: rgb(243, 243, 243);
+        border-radius: 10px;
+        margin-top: 2em;
+        margin-bottom: 2em;
+        padding: 5em;
+        text-align: center;
+        font-size: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="main-container">
+      <!-- Heading -->
+      <div class="container" id="timer-header">
+        <h1 id="top-header" class="bordered-content ">TIMER</h1>
+      </div>
+
+      <!-- Description -->
+      <div id="timer-content" class="bordered-content short-width common-font">
+        <p class = "lead text-large ">YOUR TIME IS UP</p>
+      </div>
+
+  </body>
+  <script src="reminder.js"></script>
+</html>

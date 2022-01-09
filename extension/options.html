@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Intentional Browsing - Options</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="libraries/bootstrap.min.css">
+  <link rel="stylesheet" href="options.css" type="text/css" />
+
+  <!-- Font Awesome -->
+  <script src="libraries/fontawesome.all.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+    <a class="navbar-brand" href="options.html">Intentional Browsing</a>
+    <div class="collapse navbar-collapse"></div>
+      <div class="navbar-nav navbar-dark bg-dark">
+        <a class="nav-item nav-link active" href="options.html">Tasks</a>
+        <a class="nav-item nav-link" href="help.html">Help</a>
+        <a class="nav-item nav-link" href="about.html">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="popupModal">New Task</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!--Commands-->
+
+          <!--Name of Task-->
+          <div class="row tasks__modalrow">
+            <div class="input-group">
+              <label class="col-sm">Name</label>
+              <input type="text" class="col-sm tasksModal__NameInput"/>
+            </div>
+          </div>
+
+          <!--if dropdown-->
+          <div class="row tasks__modalrow">
+            <div class="input-group mb-3">
+              <label class="col-sm">If</label>
+              <select class="custom-select" id="tasksModal__IfSelect">
+                <option selected value="-1">Choose...</option>
+              </select>
+            </div>
+
+          </div>
+
+          <!--if Specifications-->
+          <div id="tasksModal__IfSpecifications"></div>
+
+          <!--Then dropdown-->
+          <div class="row tasks__modalrow">
+            <div class="input-group mb-3">
+              <label class="col-sm">Then</label>
+              <select class="custom-select" id="tasksModal__ThenSelect">
+                <option selected value="-1">Choose...</option>
+              </select>
+            </div>
+          </div>
+
+          <!--then Specifications-->
+          <div id="tasksModal__ThenSpecifications"></div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="tasksModal__saveBtn">Save</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"
+          id = "tasksModal__deleteBtn">Delete</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container tasksContainer">
+    <div class="tasks">
+      <div class="tasks__header">
+        <h2>Tasks</h2>
+      </div>
+      <div class="tasks__addtasksdiv">
+        <button type="button" class="btn btn-success" id="createTaskBtn">Create Task</button>
+      </div>
+      <div class="tasks__list list-group">
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="libraries/jquery-3.6.0.min.js"></script>
+  <script src="libraries/popper.min.js"></script>
+  <script src="libraries/bootstrap.min.js"></script>
+
+  <!-- options.js-->
+  <script src="functions.js" type = "module"></script>
+  <script type="module" src="options.js"></script>
+
+
+</body>
+
+</html>

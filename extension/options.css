@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 70px;
+    background-color: bisque;
+}
+
+.tasksContainer {
+    border-radius: 25px;
+    background-color: white;
+    padding: 20px;
+}
+
+.tasks__header {
+    text-align: center;
+}
+
+.tasks__addtasksdiv {
+    text-align: right;
+    padding-bottom: 30px;
+}
+
+.tasks__editdeletediv {
+    text-align: right;
+}
+
+.tasks__modalrow {
+    padding: 10px;
+}
+
+.list-group-item {
+    margin-bottom: 20px;
+    border-radius: 20px;
+}

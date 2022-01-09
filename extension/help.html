@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <title>Intentional Browsing</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="libraries/bootstrap.min.css"/>
+        <link rel="stylesheet" href="help.css" type="text/css"/>
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+            <a class="navbar-brand" href="options.html">Intentional Browsing</a>
+            <div class="collapse navbar-collapse"></div>
+            <div class="navbar-nav navbar-dark bg-dark">
+                <a class="nav-item nav-link" href="options.html">Tasks</a>
+                <a class="nav-item nav-link active" href="help.html">Help</a>
+                <a class="nav-item nav-link" href="about.html">About Us</a>
+            </div>
+            </div>
+        </nav>
+
+        <div class="container contentContainer">
+            <div style="text-align: center;">
+                <h1>Help</h1>
+            </div>
+            <p>To create a new task, press the “Create Task” button.
+                Each task requires a name, trigger, and action.
+            </p>
+            <h2>Triggers</h2>
+            <p>A trigger is used to execute an action when a certain
+                condition is met. There are three types of triggers:
+            </p>
+            <ul>
+                <li><b>A site is opened:</b> execute an action
+                    based on a website you open
+                    <ul>
+                        <li><i>Host name:</i> the website URL</li>
+                    </ul>
+                </li>
+                <li><b>Set Time of Day:</b> execute an action based on a
+                    specific time. Must be written in military time
+                    <ul>
+                        <li><i>Hour of Day:</i> must be between 0 and 23</li>
+                        <li><i>Minute of Hour:</i> must be between 0 and 59</li>
+                    </ul>
+                </li>
+                <li><b>Set a Timer:</b> execute an action
+                    after a set period of time
+                    <ul>
+                        <li><i>Hours:</i> must be between 0 and 23</li>
+                        <li><i>Minutes:</i> must be between 0 and 59</li>
+                        <li><i>Seconds:</i> must be between 1 and 59</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>Actions</h2>
+            <p>An action executes commands like closing a website to giving
+                you a reminder. There are four types of actions:</p>
+            <ul>
+                <li><b>Close Site:</b> closes the website. Can only be used with <i>A site is opened</i>.</li>
+                <li><b>Close and then Open Another Site:</b> closes
+                    the site and opens a different site based on
+                    the provided URL. Can only be used with <i>A site is opened</i>.
+                    <ul>
+                        <li><i>Host name:</i> the website URL to open</li>
+                    </ul>
+                </li>
+                <li><b>Open a website:</b> opens a website
+                    based on the provided URL
+                    <ul>
+                        <li><i>Host name:</i> the website URL to open</li>
+                    </ul>
+                </li>
+                <li><b>Set a reminder:</b> opens a new tab,
+                    showing a reminder with a message you provided
+                    <ul>
+                        <li><i>Message:</i> message for reminder to present</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>Popup</h2>
+            <p>When you click the icon on the extensions bar,
+                a small popup with three buttons appears. You
+                can set a timer, set reminder, or view your tasks
+                in this popup.</p>
+        </div>
+
+        <!-- Bootstrap JS -->
+        <script src="libraries/jquery-3.6.0.min.js"></script>
+        <script src="libraries/popper.min.js"></script>
+        <script src="libraries/bootstrap.min.js"></script>
+
+    </body>
+
+</html>

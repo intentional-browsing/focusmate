@@ -1,0 +1,11 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 70px;
+    background-color: bisque;
+}
+
+.contentContainer {
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+}

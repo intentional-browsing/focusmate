@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="libraries/bootstrap.min.css" />
+</head>
+
+<body>
+  <div class="container-fluid h-100" style="width: 175px;">
+    <!--Default window-->
+    <div id="defaultWindow" style="padding-top: 10px; display: none;">
+      <!--Set Timer button-->
+      <div class="row justify-content-center h-100">
+        <div class="h-100 d-flex flex-column">
+          <button class="btn btn-lg" id="timerBtn">Set Timer</button>
+        </div>
+      </div>
+
+      <!--Set reminder button-->
+      <div class="row justify-content-center h-100">
+        <div class="h-100 d-flex flex-column">
+          <button class="btn" id="reminderBtn">Set a Reminder</button>
+        </div>
+      </div>
+
+      <!--Go to options button-->
+      <div class="text-center">
+        <button class="btn" id="optionsBtn">View Tasks</button>
+      </div>
+    </div>
+
+    <!--Set Timer window-->
+    <div id="setTimerWindow" style="padding-top: 10px; display: none;">
+      <form>
+        <!--Title of window-->
+        <div class="form-group row justify-content-center">
+          <h4>Set Timer</h4>
+        </div>
+        <div class="form-group form-inline row justify-content-center">
+          <input type="number" name="timerHours" id="timerHours" min="0" max="99" placeholder="00" class="w-25">
+          <input type="number" name="timerMinutes" id="timerMinutes" min="0" max="59" placeholder="00" class="w-25">
+          <input type="number" name="timerSeconds" id="timerSeconds" min="1" max="59" placeholder="00" class="w-25">
+        </div>
+        <!--OK and Cancel buttons-->
+        <div class="form-group form-inline row justify-content-center">
+          <button type="button" class="btn btn-primary w-25"
+            id="timerOkBtn">OK</button>
+          <button type="button" class="btn btn-default w-50"
+            style="background-color: gray; color: white" id="cancelTimerBtn">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <!--Countdown w/ Timer window-->
+    <div id="countDownWindow" style="padding-top: 10px; display: none;">
+      <!--Display time-->
+      <div class="row justify-content-center h-100">
+        <div class="h-100 d-flex flex-column">
+          <h3 id="timer">00:00:00</h3>
+        </div>
+      </div>
+
+      <!--Cancel timer button-->
+      <div class="row justify-content-center h-100">
+        <div class="h-100 d-flex flex-column">
+          <button class="btn" id="stopTimerBtn">Cancel Timer</button>
+        </div>
+      </div>
+
+      <!--Set reminder button-->
+      <div class="row justify-content-center h-100">
+        <div class="h-100 d-flex flex-column">
+          <button class="btn" id="timerReminderBtn">Set a Reminder</button>
+        </div>
+      </div>
+
+      <!--Go to options button-->
+      <div class="text-center">
+        <button class="btn" id="timerOptionsBtn">View Tasks</button>
+      </div>
+    </div>
+
+    <!--Set Reminder window-->
+    <div id="setReminderWindow" style="padding-top: 10px; display: none;">
+      <form>
+        <!--Title of window-->
+        <div class="form-group row justify-content-center">
+          <h4 class="h5">What's Your Goal?</h4>
+        </div>
+        <div class="form-group form-inline row justify-content-center">
+          <textarea class="form=control" rows="3" placeholder="Enter goal" id="message"></textarea>
+        </div>
+
+        <!--Set time-->
+        <div class="form-group form-inline row justify-content-center">
+          <input type="number" name="hours" id="reminderHours" min="0" max="24" placeholder="00" class="w-25">
+          <input type="number" name="minutes" id="reminderMins" min="0" max="59" placeholder="00" class="w-25">
+          <input type="number" name="seconds" id="reminderSeconds" min="1" max="59" placeholder="00" class="w-25">
+        </div>
+        <!--OK and Cancel buttons-->
+        <div class="form-group form-inline row justify-content-center">
+          <button type="button" class="btn btn-primary w-25" id="reminderOK">OK</button>
+          <button type="button" class="btn btn-default w-50" id="reminderCancel"
+            style="background-color: gray; color: white">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <!--Reminder Message Appears-->
+    <div id="reminderMessageWindow" style="padding-top: 10px; display: none;">
+
+      <!--Incomplete-->
+      <div class="d-flex">
+        <!--Title of window-->
+        <div class="">
+          <h4 class="h5">Reminder</h4>
+        </div>
+        <button class="btn btn-sm ml-auto float-end">X</button>
+      </div>
+
+      <!--Message-->
+      <div class="row justify-content-center">
+        <p id="reminderMessage">Message</p>
+      </div>
+
+      <!--Remind me again button-->
+      <div class="row justify-content-center">
+        <button type="submit" class="btn btn-primary">Remind Me Again</button>
+      </div>
+    </div>
+
+    <!--Remind me Again prompt-->
+    <div id="remindAgainWindow" style="padding-top: 10px; display: none;">
+      <form>
+        <!--Title of window-->
+        <div class="form-group row justify-content-center">
+          <h4 class="h5">Remind Me In</h4>
+        </div>
+
+        <!--Set time-->
+        <div class="form-group form-inline row justify-content-center">
+          <input type="number" name="hours" min="0" max="99" placeholder="00" class="w-25">
+          <input type="number" name="minutes" min="0" max="59" placeholder="00" class="w-25">
+          <input type="number" name="minutes" min="1" max="59" placeholder="00" class="w-25">
+        </div>
+        <!--OK and Cancel buttons-->
+        <div class="form-group form-inline row justify-content-center">
+          <button type="submit" class="btn btn-primary w-25">OK</button>
+          <button type="submit" class="btn btn-default w-50"
+            style="background-color: gray; color: white">Cancel</button>
+        </div>
+      </form>
+
+
+  </div>
+  <!--JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="libraries/jquery-3.6.0.min.js"></script>
+  <script src="libraries/bootstrap.min.js"></script>
+
+  <script type="module" src="popup.js"></script>
+  <script type="module" src="functions.js"></script>
+</body>
+
+</html>
