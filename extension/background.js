@@ -1,4 +1,11 @@
-import {deserializeTask, addToTasksStorage, getAllTasksFromStorage, removeTaskFromStorage, createUUID, addAllTasksToStorage} from './functions.js'
+import {
+  deserializeTask,
+  addToTasksStorage,
+  getAllTasksFromStorage,
+  removeTaskFromStorage,
+  createUUID,
+  addAllTasksToStorage,
+} from "./functions.js";
 
 // set tasks to an empty list on install
 // I believe the service worker runs constantly, so we don't need to reinit
@@ -7,8 +14,7 @@ import {deserializeTask, addToTasksStorage, getAllTasksFromStorage, removeTaskFr
 var taskList = [];
 
 chrome.runtime.onInstalled.addListener(() => {
-
-  chrome.tabs.create({url: 'about.html'})
+  chrome.tabs.create({ url: "about.html" });
 
   chrome.storage.sync.set({ tasks: [] }, () => {
     //if no tasks exist, create the sample tasks
@@ -45,47 +51,42 @@ chrome.runtime.onInstalled.addListener(() => {
       triggerString: "OpenTabTrigger",
       triggerSettings: { host: "cnn.com" },
       actionString: "CloseOpenTabAction",
-      actionSettings: { host: "www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley" },
-    }
+      actionSettings: {
+        host: "www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley",
+      },
+    };
 
     addAllTasksToStorage([sampleTask1, sampleTask2, sampleTask3, sampleTask4]);
-    initialRegistry()
-
+    initialRegistry();
   });
 });
 
 // log changes to tasks
 chrome.storage.onChanged.addListener(function (changes, namespace) {
   if ("tasks" in changes && namespace == "sync") {
-    console.log(changes.tasks)
+    console.log(changes.tasks);
   }
 });
 
-initialRegistry()
+initialRegistry();
 
-
-function initialRegistry () {
-
-  console.log("Initial registry is called")
-
+function initialRegistry() {
+  console.log("Initial registry is called");
 
   // store tasks from storage in taskList
 
   getAllTasksFromStorage((serializedTasks) => {
-    console.log(serializedTasks)
+    console.log(serializedTasks);
     if (serializedTasks) {
       serializedTasks.forEach((serializedTask) => {
-        const task = deserializeTask(serializedTask)
-        taskList.push(task)
-        task.registerTask()
+        const task = deserializeTask(serializedTask);
+        taskList.push(task);
+        task.registerTask();
       });
 
-      console.log(taskList)
+      console.log(taskList);
     }
-
-
   });
-
 }
 
 // handle all messages
@@ -93,7 +94,7 @@ function initialRegistry () {
 let timerID;
 let timerTime;
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) =>{
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   /* request
     {
       command: "",
@@ -101,38 +102,38 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) =>{
     }
   */
 
-  console.log(taskList)
+  console.log(taskList);
 
-  switch(request.command) {
+  switch (request.command) {
     case "addTask":
-      handleAddTask(request.payload)
-      sendResponse(null)
+      handleAddTask(request.payload);
+      sendResponse(null);
       break;
     case "deleteTask":
-      handleDeleteTask(request.payload)
-      sendResponse(null)
+      handleDeleteTask(request.payload);
+      sendResponse(null);
       break;
-    case 'start-timer':
-      timerTime = new Date(request.when)
+    case "start-timer":
+      timerTime = new Date(request.when);
       timerID = setTimeout(() => {
-        console.log("done!")
+        console.log("done!");
         chrome.storage.sync.set({ isTimerOn: false });
         chrome.tabs.create({
-          url: 'time-is-up.html'
+          url: "time-is-up.html",
         });
       }, timerTime.getTime() - Date.now());
       break;
-    case 'stop-timer':
-      console.log("stopped timer")
+    case "stop-timer":
+      console.log("stopped timer");
       clearInterval(timerID);
       break;
-    case 'get-time':
-      console.log("got time")
-      console.log(timerTime)
-      sendResponse({time: timerTime.getTime()})
+    case "get-time":
+      console.log("got time");
+      console.log(timerTime);
+      sendResponse({ time: timerTime.getTime() });
       break;
   }
-})
+});
 
 /*
 const nums = [1, 2, 3]
@@ -140,29 +141,27 @@ nums.map(x => x * 2) // [2, 4, 6]
 */
 
 function handleAddTasks(serializedTasks) {
-  console.log(serializedTasks)
-  const tasks = serializedTasks.map(deserializeTask)
-  console.log(tasks)
-  addAllTasksToStorage(serializedTasks)
-  tasks.forEach(task => task.registerTask())
-  taskList = [...taskList, ...tasks]
-  console.log(taskList)
-
+  console.log(serializedTasks);
+  const tasks = serializedTasks.map(deserializeTask);
+  console.log(tasks);
+  addAllTasksToStorage(serializedTasks);
+  tasks.forEach((task) => task.registerTask());
+  taskList = [...taskList, ...tasks];
+  console.log(taskList);
 }
 
 function handleAddTask(serializedTask) {
-  const task = deserializeTask(serializedTask)
-  addToTasksStorage(serializedTask)
-  task.registerTask()
-  taskList.push(task)
+  const task = deserializeTask(serializedTask);
+  addToTasksStorage(serializedTask);
+  task.registerTask();
+  taskList.push(task);
 }
 
-function handleDeleteTask(uuid){
-  console.log(taskList)
+function handleDeleteTask(uuid) {
+  console.log(taskList);
 
   const taskIndex = taskList.findIndex((task) => task.uuid == uuid);
-  if(taskIndex == -1){
-
+  if (taskIndex == -1) {
     throw Error("task could not be found");
   }
   taskList[taskIndex].deregisterTask();

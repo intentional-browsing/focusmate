@@ -1,13 +1,12 @@
 class Action {
+  static settingsTypes = [];
+  static argList = [];
 
-    static settingsTypes = []
-    static argList = []
+  constructor(settings) {
+    this.settings = settings;
+  }
 
-    constructor(settings) {
-        this.settings = settings
-    }
-
-    execute(argObj) {} // must be overriden by children
+  execute(argObj) {} // must be overriden by children
 }
 
-export default Action
+export default Action;

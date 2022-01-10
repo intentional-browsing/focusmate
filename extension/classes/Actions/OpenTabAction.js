@@ -1,28 +1,27 @@
-import Action from "../Action.js"
+import Action from "../Action.js";
 
 class OpenTabAction extends Action {
+  static humanName = "Open a website";
 
-    static humanName = "Open a website"
+  static settingsTypes = [
+    {
+      name: "host",
+      type: "string",
+      humanName: "Host Name",
+    },
+  ];
 
-    static settingsTypes = [
-        {
-            name: 'host',
-            type: 'string',
-            humanName: 'Host Name'
-        }
-    ]
+  constructor(settings) {
+    super(settings);
+  }
 
-    constructor(settings) {
-        super(settings)
-    }
-
-    execute(argObj) {
-
-        chrome.tabs.create({ url: "http://" + this.settings.host }).catch(function (error) {
-            throw error
-        })
-
-    }
+  execute(argObj) {
+    chrome.tabs
+      .create({ url: "http://" + this.settings.host })
+      .catch(function (error) {
+        throw error;
+      });
+  }
 }
 
-export default OpenTabAction
+export default OpenTabAction;
