@@ -1,54 +1,50 @@
-import actionDict from './classes/actionDict.js'
-import triggerDict from './classes/triggerDict.js'
-import {createUUID, getTaskFromStorage} from './functions.js'
+import actionDict from "./classes/actionDict.js";
+import triggerDict from "./classes/triggerDict.js";
+import { createUUID, getTaskFromStorage } from "./functions.js";
 
 // adding event handlers
 $("#tasksModal__saveBtn").on("click", saveTaskButtonHandler);
 $("#createTaskBtn").on("click", openCreateTaskModal);
 
-
 // populate IfSelect and ThenSelect
 for (const triggerKey in triggerDict) {
-  const option = `<option value="${triggerKey}">${triggerDict[triggerKey].humanName}</option>`
-  $("#tasksModal__IfSelect").append(option)
+  const option = `<option value="${triggerKey}">${triggerDict[triggerKey].humanName}</option>`;
+  $("#tasksModal__IfSelect").append(option);
 }
 
 for (const actionKey in actionDict) {
-  const option = `<option value="${actionKey}">${actionDict[actionKey].humanName}</option>`
-  $("#tasksModal__ThenSelect").append(option)
+  const option = `<option value="${actionKey}">${actionDict[actionKey].humanName}</option>`;
+  $("#tasksModal__ThenSelect").append(option);
 }
 
-function openCreateTaskModal(){
-
+function openCreateTaskModal() {
   //clear anything that might have been in modal
 
-  $(".tasksModal__NameInput").val('');
+  $(".tasksModal__NameInput").val("");
   // $(".tasks__triggerHostNameInput").val('');
   // $(".tasks__actionHostNameInput").val('');
-  $("#tasksModal__IfSelect").val('Choose...');
-  $("#tasksModal__ThenSelect").val('Choose...');
+  $("#tasksModal__IfSelect").val("Choose...");
+  $("#tasksModal__ThenSelect").val("Choose...");
 
   document.getElementById("popupModal").innerHTML = "New Task";
 
   $("#taskModal").modal("show");
 
   //clear content in the If Specs
-  $('#tasksModal__IfSpecifications').empty();
-  $('#tasksModal__ThenSpecifications').empty();
-
-
+  $("#tasksModal__IfSpecifications").empty();
+  $("#tasksModal__ThenSpecifications").empty();
 }
 
 //check what is within the if field
 let currentIfSelection;
-$('#tasksModal__IfSelect').on('change', function() {
+$("#tasksModal__IfSelect").on("change", function () {
   //clear content in the If Specs
-  $('#tasksModal__IfSpecifications').empty();
+  $("#tasksModal__IfSpecifications").empty();
 
   currentIfSelection = this.value;
-  if(this.value != -1 || this.value != currentIfSelection) {
+  if (this.value != -1 || this.value != currentIfSelection) {
     //populate the field
-    triggerDict[this.value].settingsTypes.forEach(element => {
+    triggerDict[this.value].settingsTypes.forEach((element) => {
       const div = `
       <div class="row tasks__modalrow">
         <div class="input-group">
@@ -56,22 +52,22 @@ $('#tasksModal__IfSelect').on('change', function() {
           <input type="text" id="tasksModal__IfSpecifications__${element.name}" class="col-sm"/>
         </div>
       </div>
-      `
-      $('#tasksModal__IfSpecifications').append(div)
+      `;
+      $("#tasksModal__IfSpecifications").append(div);
     });
   }
 });
 
 //check what is within the then field
 let currentThenSelection;
-$('#tasksModal__ThenSelect').on('change', function() {
-//clear content in the If Specs
-  $('#tasksModal__ThenSpecifications').empty();
+$("#tasksModal__ThenSelect").on("change", function () {
+  //clear content in the If Specs
+  $("#tasksModal__ThenSpecifications").empty();
 
   currentThenSelection = this.value;
-  if(this.value != -1 || this.value != currentThenSelection) {
+  if (this.value != -1 || this.value != currentThenSelection) {
     //populate the field
-    actionDict[this.value].settingsTypes.forEach(element => {
+    actionDict[this.value].settingsTypes.forEach((element) => {
       const div = `
       <div class="row tasks__modalrow">
         <div class="input-group">
@@ -79,8 +75,8 @@ $('#tasksModal__ThenSelect').on('change', function() {
           <input type="text" id="tasksModal__ThenSpecifications__${element.name}" class="col-sm"/>
         </div>
       </div>
-      `
-      $('#tasksModal__ThenSpecifications').append(div)
+      `;
+      $("#tasksModal__ThenSpecifications").append(div);
     });
   }
 });
@@ -88,8 +84,7 @@ $('#tasksModal__ThenSelect').on('change', function() {
 // update ui
 chrome.storage.onChanged.addListener(function (changes, namespace) {
   if ("tasks" in changes && namespace == "sync") {
-
-    console.log("change made to storage")
+    console.log("change made to storage");
     // render the new tasks List
     refreshOptions();
   }
@@ -104,35 +99,42 @@ tests
 2. the associated settings should populate accordingly
 */
 
-
 function saveTaskButtonHandler() {
   //initialize task
   const triggerString = $("#tasksModal__IfSelect").val();
   const actionString = $("#tasksModal__ThenSelect").val();
 
-  console.log(triggerString, actionString)
+  console.log(triggerString, actionString);
 
   const task = {
     name: $(".tasksModal__NameInput").val(),
     triggerString: triggerString,
     triggerSettings: {},
     actionString: actionString,
-    actionSettings: {}
+    actionSettings: {},
   };
 
   //place if Specs into trigger Settings
-  triggerDict[triggerString].settingsTypes.forEach(element => {
-    task.triggerSettings[element.name] = $(`#tasksModal__IfSpecifications__${element.name}`).val()
+  triggerDict[triggerString].settingsTypes.forEach((element) => {
+    task.triggerSettings[element.name] = $(
+      `#tasksModal__IfSpecifications__${element.name}`
+    ).val();
     if (element.type === "int") {
-      task.triggerSettings[element.name] = parseInt(task.triggerSettings[element.name]);
+      task.triggerSettings[element.name] = parseInt(
+        task.triggerSettings[element.name]
+      );
     }
   });
 
   //place then Specs into action Settings
-  actionDict[actionString].settingsTypes.forEach(element => {
-    task.actionSettings[element.name] = $(`#tasksModal__ThenSpecifications__${element.name}`).val()
+  actionDict[actionString].settingsTypes.forEach((element) => {
+    task.actionSettings[element.name] = $(
+      `#tasksModal__ThenSpecifications__${element.name}`
+    ).val();
     if (element.type === "int") {
-      task.actionSettings[element.name] = parseInt(task.actionSettings[element.name]);
+      task.actionSettings[element.name] = parseInt(
+        task.actionSettings[element.name]
+      );
     }
   });
 
@@ -141,16 +143,16 @@ function saveTaskButtonHandler() {
   if (modalCurrentTaskId === "") {
     // create a new task
     task.uuid = createUUID();
-    addTaskMessage(task)
+    addTaskMessage(task);
     // addToTasksStorage(task);
   } else {
     // edit existing task
     task.uuid = modalCurrentTaskId;
     // editTaskFromStorage(task);
-    editTaskMessage(task)
+    editTaskMessage(task);
   }
 
-  modalCurrentTaskId = ""
+  modalCurrentTaskId = "";
 
   // close modal
   $("#taskModal").modal("hide");
@@ -164,20 +166,25 @@ function addTaskMessage(task) {
   chrome.runtime.sendMessage(message);
 }
 
-function deleteTaskMessage(uuid, func = (response)=>{console.log(response)}) {
+function deleteTaskMessage(
+  uuid,
+  func = (response) => {
+    console.log(response);
+  }
+) {
   const message = {
-    command : "deleteTask",
+    command: "deleteTask",
     payload: uuid,
   };
-  chrome.runtime.sendMessage(message, func)
+  chrome.runtime.sendMessage(message, func);
 }
 
 function editTaskMessage(task) {
-  let f = function (response){addTaskMessage(task);}
-  deleteTaskMessage(task.uuid,f);
-
+  let f = function (response) {
+    addTaskMessage(task);
+  };
+  deleteTaskMessage(task.uuid, f);
 }
-
 
 window.addEventListener("load", (event) => {
   refreshOptions();
@@ -186,7 +193,7 @@ window.addEventListener("load", (event) => {
 function refreshOptions() {
   clearTasksList();
   chrome.storage.sync.get(["tasks"], function (result) {
-    console.log(result.tasks)
+    console.log(result.tasks);
     result.tasks.forEach((task) => {
       createTaskDiv(task);
     });
@@ -226,8 +233,8 @@ function getDeleteHandler(uuid) {
 function getEditHandler(uuid) {
   return () => {
     //clear content in the If Specs
-    $('#tasksModal__IfSpecifications').empty();
-    $('#tasksModal__ThenSpecifications').empty();
+    $("#tasksModal__IfSpecifications").empty();
+    $("#tasksModal__ThenSpecifications").empty();
 
     //changes name of modal
     document.getElementById("popupModal").innerHTML = "Edit Task";
@@ -236,11 +243,11 @@ function getEditHandler(uuid) {
     getTaskFromStorage(uuid, (task) => {
       $("#tasksModal__IfSelect").val(task.triggerString);
       $("#tasksModal__ThenSelect").val(task.actionString);
-      $(".tasksModal__NameInput").val(task.name)
+      $(".tasksModal__NameInput").val(task.name);
 
-      console.log(task)
+      console.log(task);
 
-      triggerDict[task.triggerString].settingsTypes.forEach(element => {
+      triggerDict[task.triggerString].settingsTypes.forEach((element) => {
         const div = `
         <div class="row tasks__modalrow">
           <div class="input-group">
@@ -248,11 +255,11 @@ function getEditHandler(uuid) {
             <input type="text" id="tasksModal__IfSpecifications__${element.name}" class="col-sm"/>
           </div>
         </div>
-        `
-        $('#tasksModal__IfSpecifications').append(div)
+        `;
+        $("#tasksModal__IfSpecifications").append(div);
       });
 
-      actionDict[task.actionString].settingsTypes.forEach(element => {
+      actionDict[task.actionString].settingsTypes.forEach((element) => {
         const div = `
         <div class="row tasks__modalrow">
           <div class="input-group">
@@ -260,36 +267,39 @@ function getEditHandler(uuid) {
             <input type="text" id="tasksModal__ThenSpecifications__${element.name}" class="col-sm"/>
           </div>
         </div>
-        `
-        $('#tasksModal__ThenSpecifications').append(div)
+        `;
+        $("#tasksModal__ThenSpecifications").append(div);
       });
 
-      console.log(task)
-      triggerDict[task.triggerString].settingsTypes.forEach(element => {
-        $(`#tasksModal__IfSpecifications__${element.name}`).val(task.triggerSettings[element.name])
+      console.log(task);
+      triggerDict[task.triggerString].settingsTypes.forEach((element) => {
+        $(`#tasksModal__IfSpecifications__${element.name}`).val(
+          task.triggerSettings[element.name]
+        );
         if (element.type === "int") {
-          task.triggerSettings[element.name] = parseInt(task.triggerSettings[element.name]);
+          task.triggerSettings[element.name] = parseInt(
+            task.triggerSettings[element.name]
+          );
         }
-      })
+      });
 
-      actionDict[task.actionString].settingsTypes.forEach(element => {
-        $(`#tasksModal__ThenSpecifications__${element.name}`).val(task.actionSettings[element.name])
+      actionDict[task.actionString].settingsTypes.forEach((element) => {
+        $(`#tasksModal__ThenSpecifications__${element.name}`).val(
+          task.actionSettings[element.name]
+        );
         if (element.type === "int") {
-          task.actionSettings[element.name] = parseInt(task.actionSettings[element.name]);
+          task.actionSettings[element.name] = parseInt(
+            task.actionSettings[element.name]
+          );
         }
-      })
-
-
+      });
 
       $("#taskModal").modal("show");
 
-      $("tasksModal__deleteBtn").on("click", getDeleteHandler(modalCurrentTaskId));
-
+      $("tasksModal__deleteBtn").on(
+        "click",
+        getDeleteHandler(modalCurrentTaskId)
+      );
     });
-
-
-
-
-
   };
 }

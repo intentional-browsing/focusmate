@@ -1,8 +1,8 @@
-import actionDict from './classes/actionDict.js'
-import triggerDict from './classes/triggerDict.js'
-import Task from './classes/Task.js'
-import TimerTrigger from './classes/Triggers/TimerTrigger.js';
-import ReminderAction from './classes/Actions/ReminderAction.js';
+import actionDict from "./classes/actionDict.js";
+import triggerDict from "./classes/triggerDict.js";
+import Task from "./classes/Task.js";
+import TimerTrigger from "./classes/Triggers/TimerTrigger.js";
+import ReminderAction from "./classes/Actions/ReminderAction.js";
 
 export function startTimer(hours, minutes, seconds, element, date = 0) {
   var countDownDate =
@@ -11,26 +11,28 @@ export function startTimer(hours, minutes, seconds, element, date = 0) {
     minutes * 60 * 1000 +
     seconds * 1000;
 
-  chrome.runtime.sendMessage({cmd: 'start-timer', when: countDownDate}, response => {
-    console.log("sent message")
-  });
+  chrome.runtime.sendMessage(
+    { cmd: "start-timer", when: countDownDate },
+    (response) => {
+      console.log("sent message");
+    }
+  );
   timer(countDownDate, element);
 }
 
 export function createReminder(hours, minutes, seconds, message) {
-
   const task = {
     uuid: createUUID(),
-    name: 'reminder',
+    name: "reminder",
     triggerString: "TimerTrigger",
-    triggerSettings: {'hours': hours, 'mins': minutes, 'secs': seconds},
+    triggerSettings: { hours: hours, mins: minutes, secs: seconds },
     actionString: "ReminderAction",
-    actionSettings: {'message': message}
-  }
+    actionSettings: { message: message },
+  };
 
   const msg = {
-    command: 'addTask',
-    payload: task
+    command: "addTask",
+    payload: task,
   };
   chrome.runtime.sendMessage(msg);
   console.log("created reminder");
@@ -50,7 +52,7 @@ export function timer(time, element) {
     chrome.storage.sync.get("isTimerOn", function (data) {
       if (data.isTimerOn == false) {
         clearInterval(x);
-        chrome.runtime.sendMessage({cmd:'stop-timer'});
+        chrome.runtime.sendMessage({ cmd: "stop-timer" });
       }
     });
 
@@ -84,17 +86,16 @@ export function getTaskFromStorage(uuid, callback) {
     if (!task) {
       throw Error(`Task ${uuid} could not be found`);
     } else {
-      callback(task)
+      callback(task);
     }
   });
 }
 
 export function getAllTasksFromStorage(callback) {
   chrome.storage.sync.get(["tasks"], function (result) {
-    callback(result.tasks)
+    callback(result.tasks);
   });
 }
-
 
 export function addToTasksStorage(newTask) {
   chrome.storage.sync.get(["tasks"], function (result) {
@@ -103,7 +104,7 @@ export function addToTasksStorage(newTask) {
 }
 
 export function addAllTasksToStorage(newTasklist) {
-    chrome.storage.sync.set({ tasks: newTasklist });
+  chrome.storage.sync.set({ tasks: newTasklist });
 }
 
 export function removeTaskFromStorage(uuid) {
@@ -148,11 +149,17 @@ To cancel timer, will need to create a callback and then figure out how to cance
 */
 
 export function deserializeTask(serializedTask) {
-
   //convert actionstring to actiontype and triggerstring to triggertype
-  var actionType = actionDict[serializedTask.actionString]
-  var triggerType = triggerDict[serializedTask.triggerString]
+  var actionType = actionDict[serializedTask.actionString];
+  var triggerType = triggerDict[serializedTask.triggerString];
   //set up static dictionaries for these
 
-  return new Task(serializedTask.uuid, serializedTask.name, triggerType, serializedTask.triggerSettings, actionType, serializedTask.actionSettings)
+  return new Task(
+    serializedTask.uuid,
+    serializedTask.name,
+    triggerType,
+    serializedTask.triggerSettings,
+    actionType,
+    serializedTask.actionSettings
+  );
 }

@@ -1,8 +1,8 @@
 .hidden {
-    display: none;
+  display: none;
 }
 
 .visible {
-    display: block;
-    padding-top: 10px;
+  display: block;
+  padding-top: 10px;
 }
