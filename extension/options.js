@@ -82,13 +82,15 @@ $("#tasksModal__ThenSelect").on("change", function () {
 });
 
 // update ui
+/*
 chrome.storage.onChanged.addListener(function (changes, namespace) {
   if ("tasks" in changes && namespace == "sync") {
     console.log("change made to storage");
     // render the new tasks List
-    refreshOptions();
+    refreshTasks();
   }
 });
+*/
 
 // modal state
 var modalCurrentTaskId = "";
@@ -187,17 +189,32 @@ function editTaskMessage(task) {
 }
 
 window.addEventListener("load", (event) => {
-  refreshOptions();
+  refreshTasks();
 });
 
-function refreshOptions() {
+function refreshTasks() {
   clearTasksList();
+  // send a message to receive the latest tasks
+  const message = {
+    command: "getAllTasks",
+  };
+  chrome.runtime.sendMessage(message, (tasks) => {
+    // on receive, populate with those tasks
+    populateTasks(tasks);
+  });
+  /*
   chrome.storage.sync.get(["tasks"], function (result) {
     console.log(result.tasks);
     result.tasks.forEach((task) => {
       createTaskDiv(task);
     });
   });
+  */
+}
+
+function populateTasks(tasks) {
+  console.log("Will populate these tasks");
+  console.log(tasks);
 }
 
 function clearTasksList() {

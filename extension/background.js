@@ -105,6 +105,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log(taskList);
 
   switch (request.command) {
+    case "getAllTasks":
+      const listOfSerializedTasks = handleGetAllTasks();
+      sendResponse(listOfSerializedTasks);
+      break;
     case "addTask":
       handleAddTask(request.payload);
       sendResponse(null);
@@ -131,6 +135,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       console.log("got time");
       console.log(timerTime);
       sendResponse({ time: timerTime.getTime() });
+      break;
+    default:
+      sendResponse({ error: "the command is not recognized" });
       break;
   }
 });
