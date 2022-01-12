@@ -102,8 +102,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
   */
 
-  console.log(taskList);
-
   switch (request.command) {
     case "getAllTasks":
       const listOfSerializedTasks = handleGetAllTasks();
@@ -142,10 +140,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-/*
-const nums = [1, 2, 3]
-nums.map(x => x * 2) // [2, 4, 6]
-*/
+function handleGetAllTasks() {
+  const serializedTasks = taskList.map((task) => task.serialize());
+  return serializedTasks;
+}
 
 function handleAddTasks(serializedTasks) {
   console.log(serializedTasks);

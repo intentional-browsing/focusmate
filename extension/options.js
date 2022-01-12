@@ -35,8 +35,12 @@ function openCreateTaskModal() {
   $("#tasksModal__ThenSpecifications").empty();
 }
 
-//check what is within the if field
+// modal state
+var modalCurrentTaskId = "";
 let currentIfSelection;
+let currentThenSelection;
+
+//check what is within the if field
 $("#tasksModal__IfSelect").on("change", function () {
   //clear content in the If Specs
   $("#tasksModal__IfSpecifications").empty();
@@ -59,7 +63,6 @@ $("#tasksModal__IfSelect").on("change", function () {
 });
 
 //check what is within the then field
-let currentThenSelection;
 $("#tasksModal__ThenSelect").on("change", function () {
   //clear content in the If Specs
   $("#tasksModal__ThenSpecifications").empty();
@@ -90,15 +93,6 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
     refreshTasks();
   }
 });
-*/
-
-// modal state
-var modalCurrentTaskId = "";
-
-/*
-tests
-1. the list of triggers and actions should display correctly
-2. the associated settings should populate accordingly
 */
 
 function saveTaskButtonHandler() {
@@ -213,8 +207,7 @@ function refreshTasks() {
 }
 
 function populateTasks(tasks) {
-  console.log("Will populate these tasks");
-  console.log(tasks);
+  tasks.map(createTaskDiv);
 }
 
 function clearTasksList() {

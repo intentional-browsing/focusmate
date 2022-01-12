@@ -163,5 +163,3 @@ export function deserializeTask(serializedTask) {
     serializedTask.actionSettings
   );
 }
-
-export function serializeTask(task) {}
